@@ -2,7 +2,8 @@ const search = document.getElementById('search'),
     submit = document.getElementById('submit'),
     random = document.getElementById('random'),
     mealsEl = document.getElementById('meals'),
-    resultHeading = document.getElementById('result-heading'), single_mealEl = document.getElementById('single-meal');
+    resultHeading = document.getElementById('result-heading'), single_mealEl = document.getElementById('single-meal'),
+    sIcon = document.getElementById('s-icon');
 
 
 function searchMeal(e) {
@@ -16,6 +17,12 @@ function searchMeal(e) {
         fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${term}`)
         .then(res => res.json())
         .then(data => {
+            if(sIcon.classList.contains('fa-spinner')){
+                sIcon.classList.remove('fa-spinner');
+                sIcon.classList.remove('fa-spin');
+                sIcon.classList.add('fa-search');
+            }
+
             console.log(data);
             resultHeading.innerHTML = `<h2>Search results for '${term}'</h2>`;
 
@@ -35,6 +42,11 @@ function searchMeal(e) {
             }
         });
 
+        if(sIcon.classList.contains('fa-search')){
+            sIcon.classList.remove('fa-search');
+            sIcon.classList.add('fa-spinner');
+            sIcon.classList.add('fa-spin');
+        }
         search.value = '';
     } else {
         alert('Please enter a search term');
